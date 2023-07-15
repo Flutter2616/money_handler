@@ -56,4 +56,5 @@ class Addcontroller extends GetxController {
     var f = DateFormat("dd-MM-yyyy");
     return f.format(dt);
   }
+
 }

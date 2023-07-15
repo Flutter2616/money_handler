@@ -2,10 +2,8 @@ import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_handler/controller/expanse_controller.dart';
-import 'package:money_handler/utils/database_helper.dart';
 import 'package:money_handler/view/budget_screen.dart';
 import 'package:money_handler/view/data_screen.dart';
-import 'package:money_handler/view/more_screen.dart';
 import 'package:money_handler/view/stats_screen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,6 +22,13 @@ class _HomescreenState extends State<Homescreen> {
   Expansecontroller controller = Get.put(Expansecontroller());
 
   @override
+  void initState() {
+    super.initState();
+    controller.readdata();
+    print("=================${controller.budgetlist.length}");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(backgroundColor: Colors.white,
@@ -33,7 +38,7 @@ class _HomescreenState extends State<Homescreen> {
                 FloatingNavbarItem(icon: Icons.home, title: "Home",),
                 FloatingNavbarItem(icon: Icons.pie_chart, title: "Budget"),
                 FloatingNavbarItem(icon: Icons.bar_chart, title: "stats"),
-                FloatingNavbarItem(icon: Icons.menu, title: "More"),
+                // FloatingNavbarItem(icon: Icons.menu, title: "More"),
               ],
               onTap: (val) {
                 controller.pageindex.value = val;
@@ -55,7 +60,7 @@ class _HomescreenState extends State<Homescreen> {
               Datascreen(),
               Budgetscreen(),
               Statsscreen(),
-              Morescreen(),
+              // Morescreen(),
             ],
             index: controller.pageindex.value,
           ),

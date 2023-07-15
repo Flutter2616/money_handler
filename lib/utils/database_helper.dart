@@ -8,11 +8,9 @@ import 'package:sqflite/sqflite.dart';
 
 class Databasehelper {
   Database? db;
-  Database? budgetdb;
   final String database_name = "expanse.db";
-  final String budget_database_name = "budget.db";
   String datatable_name = "expansetable";
-  String budgettable_name = "expansetable";
+  String budgettable_name = "budgettable";
 
   Future<Database?> checkdb() async {
     if (db != null) {
@@ -22,18 +20,19 @@ class Databasehelper {
     }
   }
 
-
   Future<Database> initdb() async {
-    String query =
-        "CREATE TABLE $datatable_name (id INTEGER PRIMARY KEY AUTOINCREMENT,category TEXT,amount INTEGER,title TEXT,note TEXT,time TEXT,date TEXT,status INTEGER)";
     Directory file = await getApplicationDocumentsDirectory();
     String path = join(file.path, database_name);
     return db = await openDatabase(path, onCreate: (db, version) async {
-      await db.execute(query);
+      String query =
+          "CREATE TABLE $datatable_name (id INTEGER PRIMARY KEY AUTOINCREMENT,category TEXT,amount INTEGER,title TEXT,note TEXT,time TEXT,date TEXT,status INTEGER)";
+      String budgetquery =
+          "CREATE TABLE $budgettable_name(id INTEGER PRIMARY KEY AUTOINCREMENT,categoryname TEXT,budget INTEGER)";
+      await db
+        ..execute(query);
+      await db.execute(budgetquery);
     }, version: 1);
   }
-
-
 
   Future<void> insertdb(Expansemodal e) async {
     db = await checkdb();
@@ -47,8 +46,6 @@ class Databasehelper {
       "status": e.status
     });
   }
-
-
 
   Future<List<Map>> readdb() async {
     db = await checkdb();
@@ -79,42 +76,48 @@ class Databasehelper {
     await db!.delete("$datatable_name", where: "id=?", whereArgs: [id]);
   }
 
+  Future<List<Map>> filterdata({type, category}) async {
+    db = await checkdb();
+    // print("type database:$type $category");
+    String query = '';
+    if (type == null && category == null) {
+      query = "SELECT * FROM $datatable_name";
+      print("null,null=================");
+    } else if (type != null && category == null) {
+      query = "SELECT * FROM $datatable_name WHERE status ='$type'";
+      print("$type,null=================");
+    } else if (type == null && category != null) {
+      query = "SELECT * FROM $datatable_name WHERE category ='$category'";
+      print("null,$category=================");
+    } else if (type != null && category != null) {
+      query = "SELECT * FROM $datatable_name WHERE category ='$category' AND status='$type'";
+      print("$type,$category=================");
+    }
+    print("==$query==");
+    List<Map> list = await db!.rawQuery(query);
+    print("==================List:$list===================");
+    return list;
+  }
+
 //===========================================================================//
-  //budgetdatabase
-  // Future<Database?> check_budget_db() async {
-  //   if (budgetdb != null) {
-  //     return budgetdb;
-  //   } else {
-  //     return await initdb();
-  //   }
-  // }
-  //
-  // Future<Database> init_budget_db() async {
-  //   String budgetquery="CREATE TABLE $budgettable_name (id INTEGER PRIMARY KEY AUTOINCREMENT,categoryname TEXT,budget INTEGER)";
-  //   Directory file = await getApplicationDocumentsDirectory();
-  //   String path = join(file.path, budget_database_name);
-  //   return budgetdb = await openDatabase(path, onCreate: (budgetdb, version) async {
-  //     await budgetdb.execute(budgetquery);
-  //   }, version: 1);
-  // }
-  //
-  // Future<void> budgetinsertdb(Budgetmodal b)
-  // async {
-  //   budgetdb=await check_budget_db();
-  //   await budgetdb!.insert("$budgettable_name", {"categoryname":b.category});
-  // }
-  //
-  // Future<void> budgetupdate()
-  // async {
-  //   budgetdb=await check_budget_db();
-  //   await budgetdb!.update("$budgettable_name",{});
-  // }
-  //
-  // Future<List<Map>> budgetread()
-  // async{
-  //   budgetdb=await check_budget_db();
-  //   String budgetquery="SELECT * FROM $budgettable_name";
-  //   List<Map> budgetlist =await budgetdb!.rawQuery(budgetquery);
-  //   return budgetlist;
-  // }
+
+  Future<void> budgetinsert(Budgetmodal b) async {
+    db = await checkdb();
+    await db!.insert(
+        budgettable_name, {"categoryname": b.category, "budget": b.amount});
+  }
+
+  Future<List<Map>> budgetread() async {
+    db = await checkdb();
+    String query = "SELECT * FROM $budgettable_name";
+    List<Map> budgetlist = await db!.rawQuery(query);
+    return budgetlist;
+  }
+
+  Future<void> budgetupdate(Budgetmodal b) async {
+    db = await checkdb();
+    await db!.update(
+        budgettable_name, {"categoryname": b.category, "budget": b.amount},
+        where: "id=?", whereArgs: [b.id]);
+  }
 }

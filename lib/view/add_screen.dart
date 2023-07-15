@@ -78,7 +78,8 @@ class _AddscreenState extends State<Addscreen> {
             }
             controller.readdata();
             // print("==================${controller.l1.length}===============");
-            Get.offAllNamed('/');
+            add.categorycolor.value=-1;
+            Get.offAllNamed('home');
           },
           child: Icon(Icons.done, size: 18.sp, color: Colors.white),
           backgroundColor: Colors.indigo),
@@ -93,7 +94,7 @@ class _AddscreenState extends State<Addscreen> {
         ),
         leading: IconButton(
             onPressed: () {
-              Get.offAllNamed('/');
+              Get.offAllNamed('home');
             },
             icon: Icon(Icons.arrow_back, color: Colors.black, size: 18.sp)),
         backgroundColor: Colors.grey.shade200,
@@ -205,7 +206,7 @@ class _AddscreenState extends State<Addscreen> {
                           onTap: () {
                             add.categorycolor.value = index;
                             add.selectcategory.value = add.addincome.value == true
-                                ? add.expanse_category[index]
+                                ? add.income_category[index]
                                 : add.expanse_category[index];
                           },
                           child: Obx(

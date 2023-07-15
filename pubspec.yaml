@@ -41,6 +41,7 @@ dependencies:
   floating_bottom_navigation_bar: ^1.5.2
   sizer: ^2.0.15
   intl: ^0.18.1
+  d_chart: ^2.3.0
 
 dev_dependencies:
   flutter_test:

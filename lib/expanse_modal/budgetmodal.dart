@@ -1,7 +1,7 @@
 class Budgetmodal
 {
   String? category;
-  int? amount;
+  int? amount,id;
 
-  Budgetmodal({this.category, this.amount});
+  Budgetmodal({this.category, this.amount,this.id});
 }

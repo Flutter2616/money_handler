@@ -5,6 +5,7 @@ import 'package:money_handler/view/budget_screen.dart';
 import 'package:money_handler/view/data_screen.dart';
 import 'package:money_handler/view/home_screen.dart';
 import 'package:money_handler/view/more_screen.dart';
+import 'package:money_handler/view/splash_screen.dart';
 import 'package:money_handler/view/stats_screen.dart';
 import 'package:sizer/sizer.dart';
 void main()
@@ -13,9 +14,10 @@ void main()
     Sizer(
       builder: (context, orientation, deviceType) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'stats',
+        // initialRoute: 'stats',
         routes: {
-          '/':(context) => Homescreen(),
+          '/':(context) => Splashscreen(),
+          'home':(context) => Homescreen(),
           'data':(context) => Datascreen(),
           'budget':(context) => Budgetscreen(),
           'stats':(context) => Statsscreen(),

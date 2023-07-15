@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_handler/controller/add_controller.dart';
 import 'package:money_handler/controller/expanse_controller.dart';
 import 'package:money_handler/utils/database_helper.dart';
 import 'package:sizer/sizer.dart';
@@ -13,12 +14,7 @@ class Datascreen extends StatefulWidget {
 
 class _DatascreenState extends State<Datascreen> {
   Expansecontroller controller = Get.put(Expansecontroller());
-
-  @override
-  void initState() {
-    super.initState();
-    controller.readdata();
-  }
+  Addcontroller add= Get.put(Addcontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +39,303 @@ class _DatascreenState extends State<Datascreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.arrow_back_ios_new,
-                            color: Colors.black, size: 13.sp),
-                        SizedBox(width: 15),
-                        Text("WED,JUL 5,2023",
+                        Text("Money",
                             style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black)),
-                        SizedBox(width: 15),
-                        Icon(Icons.arrow_forward_ios,
-                            color: Colors.black, size: 13.sp),
+                                fontSize: 18.sp,
+                                color: Colors.indigo,
+                                fontWeight: FontWeight.w500)),
+                        SizedBox(width: 5),
+                        Text("Handler",
+                            style: TextStyle(
+                                fontSize: 15.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
                       ],
                     ),
                     InkWell(
                       onTap: () {
+                        Get.bottomSheet(
+                            Container(
+                                height: 40.h,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(30),
+                                        topLeft: Radius.circular(30)),
+                                    color: Colors.white),
+                                child: Obx(
+                                  () => Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(children: [
+                                        Text(
+                                          "Filter",
+                                          style: TextStyle(
+                                              color: Colors.indigo,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20.sp),
+                                        ),
+                                        Spacer(),
+                                        InkWell(
+                                          onTap: () {
+                                            if(controller.type.value==3&&controller.category.value=="")
+                                              {
+                                                controller.read_filterdata();
+                                                print("common===========");
+                                              }
+                                            else if(controller.type.value!=3&&controller.category.value!="")
+                                              {
+                                                controller.read_filterdata(cate: controller.category.value,type: controller.type.value);
+                                                print("sort===========");
+                                              }
+                                            else if(controller.type.value!=3&&controller.category.value=="")
+                                              {
+                                                controller.read_filterdata(type: controller.type.value);
+                                              }
+                                            else if(controller.type.value==3&&controller.category.value!="")
+                                              {
+                                                controller.read_filterdata(cate:controller.category.value);
+                                              }
+                                            // print("******************${controller.filterlist[controller.type.value]['value']}===============================");
+                                            Get.back();
+                                          },
+                                          child: Container(
+                                              child: Text("filter",
+                                                  style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color: Colors.white)),
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 15, vertical: 8),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  color: Colors.indigo)),
+                                        ),
+                                        SizedBox(width: 10),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.type.value = 3;
+                                            controller.category.value = "";
+                                            controller.readdata();
+                                            Get.back();
+                                          },
+                                          child: Container(
+                                              child: Text("clear",
+                                                  style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color: Colors.white)),
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 15, vertical: 8),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  color: Colors.indigo)),
+                                        ),
+                                      ]),
+                                      SizedBox(height: 10),
+                                      Text("Type",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500)),
+                                      SizedBox(height: 10),
+                                      SizedBox(
+                                        height: 4.h,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemBuilder: (context, index) {
+                                              return InkWell(
+                                                  onTap: () {
+                                                    if (controller.type.value ==
+                                                        index) {
+                                                      controller.type.value = 3;
+                                                    } else {
+                                                      controller.type.value =
+                                                          index;
+                                                    }
+                                                  },
+                                                  child: Obx(
+                                                    () => Container(
+                                                      margin: EdgeInsets.only(
+                                                          right: 10),
+                                                      alignment: Alignment.center,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8,
+                                                              vertical: 5),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(15),
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.black),
+                                                          color:
+                                                              controller.type
+                                                                          .value ==
+                                                                      index
+                                                                  ? Colors.indigo
+                                                                      .shade100
+                                                                  : Colors.grey
+                                                                      .shade100),
+                                                      child: Text(
+                                                          "${controller.filterlist[index]}"),
+                                                    ),
+                                                  ));
+                                            },
+                                            itemCount:
+                                                controller.filterlist.length),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text("Category",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500)),
+                                      SizedBox(height: 10),
+                                      controller.type.value == 0
+                                          ? Expanded(
+                                              child: GridView.builder(
+                                                  gridDelegate:
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount: 3,
+                                                          mainAxisExtent: 6.h,
+                                                          crossAxisSpacing: 5),
+                                                  itemBuilder: (context, index) {
+                                                    return InkWell(
+                                                        onTap: () {
+                                                          if (controller.category
+                                                                  .value ==
+                                                              controller
+                                                                      .income_category[
+                                                                  index]) {
+                                                            controller.category
+                                                                .value = "";
+                                                          } else {
+                                                            controller.category
+                                                                .value = controller
+                                                                    .income_category[
+                                                                index];
+                                                          }
+                                                        },
+                                                        child: Obx(
+                                                          () => Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right: 10,
+                                                                    bottom: 10),
+                                                            alignment:
+                                                                Alignment.center,
+                                                            width: 20.w,
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal: 8,
+                                                                    vertical: 5),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .black),
+                                                                color: controller
+                                                                            .category
+                                                                            .value ==
+                                                                        controller
+                                                                                .income_category[
+                                                                            index]
+                                                                    ? Colors
+                                                                        .indigo
+                                                                        .shade100
+                                                                    : Colors.grey
+                                                                        .shade100),
+                                                            child: Text(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                "${controller.income_category[index]}"),
+                                                          ),
+                                                        ));
+                                                  },
+                                                  itemCount: controller
+                                                      .income_category.length),
+                                            )
+                                          : Expanded(
+                                              child: GridView.builder(
+                                                  gridDelegate:
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount: 3,
+                                                          mainAxisExtent: 6.h,
+                                                          crossAxisSpacing: 5),
+                                                  itemBuilder: (context, index) {
+                                                    return InkWell(
+                                                        onTap: () {
+                                                          if (controller.category
+                                                                  .value ==
+                                                              controller
+                                                                      .expanse_category[
+                                                                  index]) {
+                                                            controller.category
+                                                                .value = "";
+                                                          } else {
+                                                            controller.category
+                                                                .value = controller
+                                                                    .expanse_category[
+                                                                index];
+                                                          }
+                                                        },
+                                                        child: Obx(
+                                                          () => Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right: 10,
+                                                                    bottom: 10),
+                                                            alignment:
+                                                                Alignment.center,
+                                                            width: 20.w,
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal: 8,
+                                                                    vertical: 5),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .black),
+                                                                color: controller
+                                                                            .category
+                                                                            .value ==
+                                                                        controller
+                                                                                .expanse_category[
+                                                                            index]
+                                                                    ? Colors
+                                                                        .indigo
+                                                                        .shade100
+                                                                    : Colors.grey
+                                                                        .shade100),
+                                                            child: Text(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                "${controller.expanse_category[index]}"),
+                                                          ),
+                                                        ));
+                                                  },
+                                                  itemCount: controller
+                                                      .expanse_category.length),
+                                            ),
+                                    ],
+                                  ),
+                                )),
+                            isDismissible: true,
+                            enableDrag: true);
                       },
                       child: CircleAvatar(
                           radius: 15.sp,
@@ -70,8 +348,16 @@ class _DatascreenState extends State<Datascreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        expansetype(0),
-                        expansetype(1),
+                        InkWell(onTap: () {
+                          add.addincome.value=true;
+                          add.addexpanse.value=false;
+                          Get.toNamed("add", arguments: {"status": 0, "index": null});
+                        },child: expansetype(0)),
+                        InkWell(onTap: () {
+                          add.addincome.value=false;
+                          add.addexpanse.value=true;
+                          Get.toNamed("add", arguments: {"status": 0, "index": null});
+                        },child: expansetype(1)),
                       ]),
                   SizedBox(height: 15),
                   Text(
@@ -130,7 +416,15 @@ class _DatascreenState extends State<Datascreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 18.sp,
                                               color: Colors.indigo)),
-                                      leading: Icon(Icons.account_balance),
+                                      leading: Container(
+                                        width: 8.w,
+                                        height: 8.w,
+                                        child: Image.asset(
+                                            controller.l1[e.key]["status"] == 0
+                                                ? "assets/image/wallet.png"
+                                                : "assets/image/lost.png",
+                                            fit: BoxFit.fill),
+                                      ),
                                       subtitle: Text(
                                           "${controller.l1[e.key]['category']}",
                                           style: TextStyle(
