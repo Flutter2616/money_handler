@@ -85,6 +85,7 @@ class Expansecontroller extends GetxController {
 
   void budget_SpentTotal() {
     spentlist.clear();
+    RxList<int> stat=<int>[].obs;
     RxList<Map> blist = <Map>[
       {"category": "Bills and utilities", "spent": 0},
       {"category": "Food and Drinks", "spent": 0},
@@ -133,4 +134,15 @@ class Expansecontroller extends GetxController {
     l1.value = await data.filterdata(type: type,category: cate);
     print("Filter l1:${l1}");
   }
+
+  // RxList statlist=[].obs;
+  // void stat_percentage()
+  // {
+  //   int per=0;
+  //   for(int i=0;i<spentlist.length;i++)
+  //     {
+  //       per=(spentlist[i]['spent']/budgetlist[i]['budget']);
+  //       statlist.add(per);
+  //     }
+  // }
 }

@@ -61,9 +61,8 @@ class _BudgetscreenState extends State<Budgetscreen> {
                               value: controller.budgetlist[index]['budget'] ==
                                       null
                                   ? (controller.spentlist[index]['spent'] / 100)
-                                  : (controller.spentlist[index]['spent'] *
-                                          100) /
-                                      controller.budgetlist[index]['budget'],
+                                  : (controller.spentlist[index]['spent'] /
+                                      controller.budgetlist[index]['budget']),
                               minHeight: 0.5.h,
                               color: Colors.indigo),
                         ),
@@ -99,6 +98,8 @@ class _BudgetscreenState extends State<Budgetscreen> {
                     ),
                     trailing: InkWell(
                       onTap: () {
+                        print(
+                            "${(controller.spentlist[index]['spent'] / controller.budgetlist[index]['budget'])}");
                         txtbudget.clear();
                         Get.dialog(
                             AlertDialog(

@@ -14,7 +14,7 @@ class Datascreen extends StatefulWidget {
 
 class _DatascreenState extends State<Datascreen> {
   Expansecontroller controller = Get.put(Expansecontroller());
-  Addcontroller add= Get.put(Addcontroller());
+  Addcontroller add = Get.put(Addcontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,8 @@ class _DatascreenState extends State<Datascreen> {
                                     color: Colors.white),
                                 child: Obx(
                                   () => Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(children: [
                                         Text(
@@ -79,24 +80,34 @@ class _DatascreenState extends State<Datascreen> {
                                         Spacer(),
                                         InkWell(
                                           onTap: () {
-                                            if(controller.type.value==3&&controller.category.value=="")
-                                              {
-                                                controller.read_filterdata();
-                                                print("common===========");
-                                              }
-                                            else if(controller.type.value!=3&&controller.category.value!="")
-                                              {
-                                                controller.read_filterdata(cate: controller.category.value,type: controller.type.value);
-                                                print("sort===========");
-                                              }
-                                            else if(controller.type.value!=3&&controller.category.value=="")
-                                              {
-                                                controller.read_filterdata(type: controller.type.value);
-                                              }
-                                            else if(controller.type.value==3&&controller.category.value!="")
-                                              {
-                                                controller.read_filterdata(cate:controller.category.value);
-                                              }
+                                            if (controller.type.value == 3 &&
+                                                controller.category.value ==
+                                                    "") {
+                                              controller.read_filterdata();
+                                              print("common===========");
+                                            } else if (controller.type.value !=
+                                                    3 &&
+                                                controller.category.value !=
+                                                    "") {
+                                              controller.read_filterdata(
+                                                  cate:
+                                                      controller.category.value,
+                                                  type: controller.type.value);
+                                              print("sort===========");
+                                            } else if (controller.type.value !=
+                                                    3 &&
+                                                controller.category.value ==
+                                                    "") {
+                                              controller.read_filterdata(
+                                                  type: controller.type.value);
+                                            } else if (controller.type.value ==
+                                                    3 &&
+                                                controller.category.value !=
+                                                    "") {
+                                              controller.read_filterdata(
+                                                  cate: controller
+                                                      .category.value);
+                                            }
                                             // print("******************${controller.filterlist[controller.type.value]['value']}===============================");
                                             Get.back();
                                           },
@@ -161,7 +172,8 @@ class _DatascreenState extends State<Datascreen> {
                                                     () => Container(
                                                       margin: EdgeInsets.only(
                                                           right: 10),
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       padding:
                                                           EdgeInsets.symmetric(
                                                               horizontal: 8,
@@ -170,17 +182,17 @@ class _DatascreenState extends State<Datascreen> {
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(15),
-                                                          border: Border.all(
-                                                              color:
-                                                                  Colors.black),
-                                                          color:
-                                                              controller.type
-                                                                          .value ==
-                                                                      index
-                                                                  ? Colors.indigo
-                                                                      .shade100
-                                                                  : Colors.grey
-                                                                      .shade100),
+                                                          border: Border
+                                                              .all(
+                                                                  color: Colors
+                                                                      .black),
+                                                          color: controller.type
+                                                                      .value ==
+                                                                  index
+                                                              ? Colors.indigo
+                                                                  .shade100
+                                                              : Colors.grey
+                                                                  .shade100),
                                                       child: Text(
                                                           "${controller.filterlist[index]}"),
                                                     ),
@@ -204,10 +216,12 @@ class _DatascreenState extends State<Datascreen> {
                                                           crossAxisCount: 3,
                                                           mainAxisExtent: 6.h,
                                                           crossAxisSpacing: 5),
-                                                  itemBuilder: (context, index) {
+                                                  itemBuilder:
+                                                      (context, index) {
                                                     return InkWell(
                                                         onTap: () {
-                                                          if (controller.category
+                                                          if (controller
+                                                                  .category
                                                                   .value ==
                                                               controller
                                                                       .income_category[
@@ -227,13 +241,15 @@ class _DatascreenState extends State<Datascreen> {
                                                                 EdgeInsets.only(
                                                                     right: 10,
                                                                     bottom: 10),
-                                                            alignment:
-                                                                Alignment.center,
+                                                            alignment: Alignment
+                                                                .center,
                                                             width: 20.w,
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                    horizontal: 8,
-                                                                    vertical: 5),
+                                                                    horizontal:
+                                                                        8,
+                                                                    vertical:
+                                                                        5),
                                                             decoration: BoxDecoration(
                                                                 borderRadius:
                                                                     BorderRadius
@@ -245,13 +261,13 @@ class _DatascreenState extends State<Datascreen> {
                                                                 color: controller
                                                                             .category
                                                                             .value ==
-                                                                        controller
-                                                                                .income_category[
+                                                                        controller.income_category[
                                                                             index]
                                                                     ? Colors
                                                                         .indigo
                                                                         .shade100
-                                                                    : Colors.grey
+                                                                    : Colors
+                                                                        .grey
                                                                         .shade100),
                                                             child: Text(
                                                                 textAlign:
@@ -271,10 +287,12 @@ class _DatascreenState extends State<Datascreen> {
                                                           crossAxisCount: 3,
                                                           mainAxisExtent: 6.h,
                                                           crossAxisSpacing: 5),
-                                                  itemBuilder: (context, index) {
+                                                  itemBuilder:
+                                                      (context, index) {
                                                     return InkWell(
                                                         onTap: () {
-                                                          if (controller.category
+                                                          if (controller
+                                                                  .category
                                                                   .value ==
                                                               controller
                                                                       .expanse_category[
@@ -294,13 +312,15 @@ class _DatascreenState extends State<Datascreen> {
                                                                 EdgeInsets.only(
                                                                     right: 10,
                                                                     bottom: 10),
-                                                            alignment:
-                                                                Alignment.center,
+                                                            alignment: Alignment
+                                                                .center,
                                                             width: 20.w,
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                    horizontal: 8,
-                                                                    vertical: 5),
+                                                                    horizontal:
+                                                                        8,
+                                                                    vertical:
+                                                                        5),
                                                             decoration: BoxDecoration(
                                                                 borderRadius:
                                                                     BorderRadius
@@ -312,13 +332,13 @@ class _DatascreenState extends State<Datascreen> {
                                                                 color: controller
                                                                             .category
                                                                             .value ==
-                                                                        controller
-                                                                                .expanse_category[
+                                                                        controller.expanse_category[
                                                                             index]
                                                                     ? Colors
                                                                         .indigo
                                                                         .shade100
-                                                                    : Colors.grey
+                                                                    : Colors
+                                                                        .grey
                                                                         .shade100),
                                                             child: Text(
                                                                 textAlign:
@@ -348,16 +368,22 @@ class _DatascreenState extends State<Datascreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(onTap: () {
-                          add.addincome.value=true;
-                          add.addexpanse.value=false;
-                          Get.toNamed("add", arguments: {"status": 0, "index": null});
-                        },child: expansetype(0)),
-                        InkWell(onTap: () {
-                          add.addincome.value=false;
-                          add.addexpanse.value=true;
-                          Get.toNamed("add", arguments: {"status": 0, "index": null});
-                        },child: expansetype(1)),
+                        InkWell(
+                            onTap: () {
+                              add.addincome.value = true;
+                              add.addexpanse.value = false;
+                              Get.toNamed("add",
+                                  arguments: {"status": 0, "index": null});
+                            },
+                            child: expansetype(0)),
+                        InkWell(
+                            onTap: () {
+                              add.addincome.value = false;
+                              add.addexpanse.value = true;
+                              Get.toNamed("add",
+                                  arguments: {"status": 0, "index": null});
+                            },
+                            child: expansetype(1)),
                       ]),
                   SizedBox(height: 15),
                   Text(

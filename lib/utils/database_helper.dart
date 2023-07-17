@@ -21,15 +21,14 @@ class Databasehelper {
   }
 
   Future<Database> initdb() async {
-    Directory file = await getApplicationDocumentsDirectory();
+      Directory file = await getApplicationDocumentsDirectory();
     String path = join(file.path, database_name);
     return db = await openDatabase(path, onCreate: (db, version) async {
       String query =
           "CREATE TABLE $datatable_name (id INTEGER PRIMARY KEY AUTOINCREMENT,category TEXT,amount INTEGER,title TEXT,note TEXT,time TEXT,date TEXT,status INTEGER)";
       String budgetquery =
           "CREATE TABLE $budgettable_name(id INTEGER PRIMARY KEY AUTOINCREMENT,categoryname TEXT,budget INTEGER)";
-      await db
-        ..execute(query);
+      await db.execute(query);
       await db.execute(budgetquery);
     }, version: 1);
   }
