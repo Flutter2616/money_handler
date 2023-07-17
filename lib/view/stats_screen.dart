@@ -162,17 +162,14 @@ class _StatsscreenState extends State<Statsscreen> {
                         title: Text("${add.expanse_category[index]}",
                             style: TextStyle(
                                 fontSize: 15.sp, color: Colors.black)),
-                        subtitle: Text("0 Transactions",
-                            style: TextStyle(
-                                fontSize: 10.sp, color: Colors.grey.shade300)),
                         trailing: Stack(
                           alignment: Alignment(0, 0),
                           children: [
-                            Text("0%"),
+                            Text("${((controller.spentlist[index]['spent']/controller.overall)*100).toStringAsFixed(0)}%"),
                             CircularProgressIndicator(
                               backgroundColor: Colors.grey.shade300,
                               color: Colors.indigo,
-                              value: 0.5,
+                              value: (controller.spentlist[index]['spent']/controller.overall),
                             ),
                           ],
                         ),
@@ -191,13 +188,10 @@ class _StatsscreenState extends State<Statsscreen> {
                         title: Text("${add.income_category[index]}",
                             style: TextStyle(
                                 fontSize: 15.sp, color: Colors.black)),
-                        subtitle: Text("0 Transactions",
-                            style: TextStyle(
-                                fontSize: 10.sp, color: Colors.grey.shade300)),
                         trailing: Stack(
                           alignment: Alignment(0, 0),
                           children: [
-                            Text("0%"),
+                            Text("${0.0}%"),
                             CircularProgressIndicator(
                               backgroundColor: Colors.grey.shade300,
                               color: Colors.indigo,
